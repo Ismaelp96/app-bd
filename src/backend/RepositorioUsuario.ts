@@ -23,4 +23,12 @@ export default class RepositorioUsuario {
     const usuario = await this.db.user.findUnique({ where: { id } });
     return usuario as Usuario;
   }
+
+  static async deletar(id: string): Promise<void> {
+    await this.db.user.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

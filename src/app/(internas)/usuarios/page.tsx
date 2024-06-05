@@ -25,8 +25,16 @@ export default function UsuariosPage() {
     setUsuario(null);
   }
 
+  async function deletar() {
+    if (!usuario || !usuario.id) return;
+    await Backend.usuarios.deletar(usuario.id!);
+    const usuarios = await Backend.usuarios.obter();
+    setUsuarios(usuarios);
+    setUsuario(null);
+  }
+
   return (
-    <Pagina className='flex flex-col gap-6'>
+    <Pagina className='flex flex-col gap-6 w-full'>
       <Titulo
         principal='Usuários'
         segundario='Cadastro de Usuarios'
@@ -39,6 +47,7 @@ export default function UsuariosPage() {
           onChange={setUsuario}
           onCancel={() => setUsuario(null)}
           onSave={onSave}
+          deletar={deletar}
         />
       ) : (
         <>

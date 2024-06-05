@@ -10,7 +10,7 @@ export default function inputTexto(props: InputTextoProps) {
       <label>{props.label}</label>
       <input
         {...props}
-        className='bg-zinc-800 text-white p-2 rounded-md outline-none w-full max-w-[360px]'
+        className='bg-zinc-800 text-white p-2 rounded-md outline-none w-full'
       />
     </div>
   );
