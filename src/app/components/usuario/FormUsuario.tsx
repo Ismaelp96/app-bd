@@ -11,10 +11,10 @@ export interface FormularioUsuarioProps {
 
 export default function FormUsuario(props: FormularioUsuarioProps) {
   return (
-    <div>
+    <div className='flex items-center justify-center flex-col w-full'>
       <h1 className='text-xl font-semibold'>Formulário de Usuário</h1>
-      <form action='' className='space-y-4 w-full max-w-[360px]'>
-        <div className='flex flex-col gap-4'>
+      <form action='' className='space-y-4 w-full max-w-[400px]'>
+        <div className='flex flex-col gap-4 w-full'>
           <InputTexto
             label='Nome'
             type='text'
@@ -40,7 +40,7 @@ export default function FormUsuario(props: FormularioUsuarioProps) {
             }
           />
         </div>
-        <div className='flex items-center gap-5 w-full justify-end'>
+        <div className='flex items-center gap-5 w-full'>
           <button
             className='bg-blue-500 px-4 py-4 rounded-md hover:brightness-90 transition-all duration-200'
             onClick={props.onSave}

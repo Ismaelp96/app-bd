@@ -1,12 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { IconPlus, IconUser } from '@tabler/icons-react';
 
 import Pagina from '@/app/components/template/Pagina';
 import Titulo from '@/app/components/template/Titulo';
 import FormUsuario from '@/app/components/usuario/FormUsuario';
 import ListaUsuarios from '@/app/components/usuario/ListaUsuario';
-import { usuarios } from '@/app/data/constants/usuario';
-import { IconUser } from '@tabler/icons-react';
 import { Usuario } from '@/core/model/Usuario';
 import Backend from '@/backend';
 
@@ -14,9 +13,16 @@ export default function UsuariosPage() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [usuario, setUsuario] = useState<Partial<Usuario> | null>(null);
 
-  function onSave() {
+  useEffect(() => {
+    Backend.usuarios.obter().then(setUsuarios);
+  }, []);
+
+  async function onSave() {
     if (!usuario) return;
-    Backend.usuarios.salvar(usuario);
+    await Backend.usuarios.salvar(usuario);
+    const usuarios = await Backend.usuarios.obter();
+    setUsuarios(usuarios);
+    setUsuario(null);
   }
 
   return (
@@ -35,7 +41,18 @@ export default function UsuariosPage() {
           onSave={onSave}
         />
       ) : (
-        <ListaUsuarios onClick={setUsuario} />
+        <>
+          <div className='flex justify-end'>
+            <button
+              className='bg-blue-500 px-4 py-2 rounded-md flex items-center gap-2'
+              onClick={() => setUsuario({})}
+            >
+              <IconPlus className='text-white' />
+              <span className='text-white'>Novo Usuário</span>
+            </button>
+          </div>
+          <ListaUsuarios usuarios={usuarios} onClick={setUsuario} />
+        </>
       )}
     </Pagina>
   );
